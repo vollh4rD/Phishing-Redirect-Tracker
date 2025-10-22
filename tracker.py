@@ -3,15 +3,14 @@ import os
 from datetime import datetime
 from dotenv import load_dotenv
 
-# Load .env for LOG_DIR
 load_dotenv()
 
 # Configuration
 CSV_FILE = 'user_list.csv'  # Relative: in PROJECT_DIR (/var/www/redirect-app)
 LOG_DIR = os.environ.get('LOG_DIR', '/var/log/redirect-app')
-os.makedirs(LOG_DIR, exist_ok=True)  # Ensure log dir exists
-CLICKS_LOG = os.path.join(LOG_DIR, 'utm_id_clicks.txt')  # Absolute: in LOG_DIR
-OUTPUT_LOG = os.path.join(LOG_DIR, 'user_clicks_tracked.txt')  # Absolute: in LOG_DIR
+os.makedirs(LOG_DIR, exist_ok=True)  
+CLICKS_LOG = os.path.join(LOG_DIR, 'utm_id_clicks.txt')  
+OUTPUT_LOG = os.path.join(LOG_DIR, 'user_clicks_tracked.txt')  
 
 def load_user_data(csv_file):
     """
@@ -19,7 +18,7 @@ def load_user_data(csv_file):
     Assumes CSV has headers: name, email, utm_id
     """
     user_map = {}
-    csv_path = os.path.join(os.getcwd(), csv_file)  # Full path in PROJECT_DIR
+    csv_path = os.path.join(os.getcwd(), csv_file)  
     if not os.path.exists(csv_path):
         print(f"CSV file '{csv_path}' not found. Please ensure it exists in {os.getcwd()}.")
         return user_map
@@ -64,7 +63,7 @@ def track_user_clicks(user_map, clicks_log, output_log):
             else:
                 print(f"Unknown utm_id: {utm_id} (no matching user in CSV)")
     
-    # Write tracked clicks to output log
+
     with open(output_log, mode='a', encoding='utf-8') as file:
         for click in tracked_clicks:
             log_line = f"{click['timestamp']}: {click['utm_id']} - {click['name']} ({click['email']})\n"
@@ -73,11 +72,9 @@ def track_user_clicks(user_map, clicks_log, output_log):
     print(f"Tracked {len(tracked_clicks)} user clicks and appended to '{output_log}'.")
 
 if __name__ == '__main__':
-    # Load user data from CSV
     user_map = load_user_data(CSV_FILE)
     
     if user_map:
-        # Track clicks
         track_user_clicks(user_map, CLICKS_LOG, OUTPUT_LOG)
     else:
         print("No user data loaded. Exiting.")  
