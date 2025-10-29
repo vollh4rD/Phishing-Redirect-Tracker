@@ -89,6 +89,10 @@ This project sets up a lightweight Flask-based web server that:
 - **Tracker Errors**: CSV headers must match (`name`, `email`, `utm_id`); run in venv.
 - **DNS/SSL**: Wait propagation; test with `dig <subdomain>.<domain>`.
 
+## Disclaimer
+
+The Content is provided solely for educational, informational, and general purposes. It is not intended for use in making any business, investment, or legal decisions. Although every effort has been made to keep the information up-to-date and accurate, no representations or warranties, express or implied, are made regarding the completeness, accuracy, reliability, suitability, or availability of the Content.
+
 ## Contributing/Extending
 
 - Add DB logging: Replace file writes in `redirect_server.py` with SQLite/Postgres.
